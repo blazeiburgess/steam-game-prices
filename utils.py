@@ -12,7 +12,7 @@ def _convert_commas_to_periods_in_money(money_text):
     return "".join(broken[:-1]) + "." + broken[-1]
 
 def parse_float(text: str) -> float:
-    if text.lower().strip() in ('free to play', 'free', 'play for free!'):
+    if text.lower().strip() in ('free to play', 'free', 'play for free!', 'free demo'):
         return 0
     elif text.count(',') > 1:
         return float(search(r'\d{1,}[\d,.]*',text).group(0).replace(',',''))
