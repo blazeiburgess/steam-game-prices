@@ -1,8 +1,12 @@
 from requests import Request, Session
+import logging
+
 class BasePuller(object):
     base_headers = {}
     def __init__(self, *args, session_args=[], session_kwargs={}, **kwargs):
         self.sess = Session(*session_args, **session_kwargs)
+        self.log = logging.getLogger(self.__class__.__name__)
+        self.log.setLevel(logging.DEBUG)
 
         self.initialize(*args, **kwargs)
 
