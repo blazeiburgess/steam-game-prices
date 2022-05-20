@@ -12,6 +12,36 @@ python3 -m pip install -r requirements.txt
 
 # Run
 
+## Docker
+
+The `./bin/build` and `./bin/run` files use docker-compose to execute. 
+
+A more full list of commands are below, but basic running with default parameters is just:
+
+```sh
+./bin/run # on first run this should build, but any changes will have to be rebuilt
+```
+
+Building or rebuilding the image is
+
+```sh
+./bin/build
+```
+
+The equivalent of the 'open world' query below would be
+
+```sh
+./bin/run -t 'open world'
+```
+
+And a more custom query could be
+
+```sh
+./bin/run --page-type newreleases --os linux -t first-person -t puzzle
+```
+
+## Direct
+
 Running with all default options is as simple as:
 
 ```
@@ -48,3 +78,5 @@ python3 main.py -t open_world # underscores are equivalent to spaces
 ```
 
 Currently there is no control over what country you are pulling from or the sorting of the final csv. In addition you don't have the ability to open the file from the cli directly. Otherwise functionality should be equivalent.
+
+The current sort is on original\_price, discount DESC. So the most expensive gams with the largest discounts will appear at the top.
