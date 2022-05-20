@@ -4,11 +4,6 @@ Forked from https://github.com/OLoKo64/steam-game-prices
 
 Refactored, removed dependency on selenium, and added a couple features. Some features exist in the original that have not yet been added here.
 
-# Install dependencies
-
-```sh
-python3 -m pip install -r requirements.txt
-```
 
 # Run
 
@@ -16,17 +11,22 @@ python3 -m pip install -r requirements.txt
 
 The `./bin/build` and `./bin/run` files use docker-compose to execute. 
 
-A more full list of commands are below, but basic running with default parameters is just:
-
-```sh
-./bin/run # on first run this should build, but any changes will have to be rebuilt
-```
+### Install dependencies
 
 Building or rebuilding the image is
 
 ```sh
 ./bin/build
 ```
+### Executing the application
+
+
+A more full list of commands are below, but basic running with default parameters is just:
+
+```sh
+./bin/run # on first run this should build, but any changes will have to be rebuilt
+```
+
 
 The equivalent of the 'open world' query below would be
 
@@ -41,6 +41,23 @@ And a more custom query could be
 ```
 
 ## Direct
+
+### Install dependencies
+
+It may make sense to setup a virtual environment:
+
+```sh
+python3 -m virtualenv venv
+. venv/bin/activate
+```
+
+In any case, installing dependencies will involve
+
+```sh
+python3 -m pip install -r requirements.txt
+```
+
+### Executing the application
 
 Running with all default options is as simple as:
 
