@@ -1,30 +1,50 @@
 # Steam Prices
 
-This application was created aiming into learning how to use Python web crawlers, and it's **NOT** a fully functional or easy to use application.
+Forked from https://github.com/OLoKo64/steam-game-prices
 
-For now it has support for Real `R$` and Dollar `$` prices.
+Refactored, removed dependency on selenium, and added a couple features. Some features exist in the original that have not yet been added here.
 
-https://user-images.githubusercontent.com/49915167/168497808-c0817b53-ab01-4b88-961d-c47f9146b04c.mp4
+# Install dependencies
 
-### Features
-- Real and Dollar prices.
-- Sort by Name, Price, and Discount.
-- Search games from New Releases, Top Sellers, and Upcoming pages from Steam.
-- Set the number of pages to be scraped.
-- Output to a CSV file.
-
-### Requirements
-
-```
-beautifulsoup4
-selenium
-tqdm
+```sh
+python3 -m pip install -r requirements.txt
 ```
 
-Gecko Driver: https://github.com/mozilla/geckodriver/releases
+# Run
 
-You need to install these three dependencies and add the Gecko Driver to your PATH.
+Running with all default options is as simple as:
 
-### To Do
+```
+python3 main.py
+```
 
-1. Add more monetary values.
+To see what options are available you can see the help message with 
+
+```sh
+python3 main.py -h
+#or 
+python3 main.py --help
+```
+
+You have control over the following parameters:
+
+* Operating system (can specify linux, mac, or win)
+* Query (arbitrary)
+* Tags (must match to steam tags, but will give an error message if not)
+
+
+To see available tags you can run:
+
+```sh
+python3 main.py --list-steam-tags
+```
+
+For multiword tags you can use any of the following syntax:
+
+```sh
+python3 main.py -t 'open world'
+python3 main.py -t 'Open World' # case insensitive
+python3 main.py -t open_world # underscores are equivalent to spaces
+```
+
+Currently there is no control over what country you are pulling from or the sorting of the final csv. In addition you don't have the ability to open the file from the cli directly. Otherwise functionality should be equivalent.
