@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  steamprice:
+    build: .
+    volumes:
+      - "./output:/app/output"
