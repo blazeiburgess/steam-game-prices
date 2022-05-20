@@ -34,7 +34,6 @@ def main():
     writer = CSVWriter(results, results[0].keys(), 'steam', args['page_type'], pull_timestamp, args['operating_system'],
             args['query'], args['tags'])
     writer.write()
-    print(args)
 
 if __name__ == '__main__':
     main()
