@@ -94,6 +94,8 @@ python3 main.py -t 'Open World' # case insensitive
 python3 main.py -t open_world # underscores are equivalent to spaces
 ```
 
+# TODO
+
 Currently there is no control over what country you are pulling from or the sorting of the final csv. In addition you don't have the ability to open the file from the cli directly. Otherwise functionality should be equivalent.
 
-The current sort is on original\_price, discount DESC. So the most expensive gams with the largest discounts will appear at the top.
+The current sort is on original\_price, discount DESC. So the most expensive gams with the largest discounts will appear at the top. It would be simple to add sorting by columns alone, but some special use cases (e.g. biggest discount by total currency amount, not percentage) would be nice to integrate at the beginning.
