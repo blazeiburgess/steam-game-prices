@@ -16,4 +16,6 @@ RUN apk add libxml2 libxslt
 
 COPY . .
 
+RUN python -m compileall
+
 CMD ["python", "main.py"]
