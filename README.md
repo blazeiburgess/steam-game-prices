@@ -40,6 +40,41 @@ And a more custom query could be
 ./bin/run --page-type newreleases --os linux -t first-person -t puzzle
 ```
 
+To change country (and implicitly currency) you can use the `--country-code` or `--cc` argument. This accepts case-insensitive iso2 codes or the Enlish version of country names (e.g. "Germany" not "Deutschland", "Brazil" not "Brasil", "China" not "中国").
+
+If you don't know the iso code, you can see it mapped against the english language name with a helper command below
+
+```sh
+./bin/run --list-steam-countries # to see a full list
+
+# For Argentina, these are all equivalent and will return ARS$
+./bin/run --cc ar
+./bin/run --cc Argentina
+./bin/run --cc argentina
+./bin/run --country-code AR
+
+# For multi-word names underscores are equivalent to spaces, same as tags, e.g.
+./bin/run --cc south_africa
+./bin/run --cc sierra_leone
+
+# For names with dashes, you can use the dash, e.g.
+./bin/run --cc timor-leste
+```
+
+I don't know how supported each country is in steam. The countries were just pulled from a list of ISO2 code countries and regions. Also names can be confusing since they came from a list of official names. These can be changed since the ISO code is all that matters.
+
+Examples are:
+
+* "Syrian Arab Republic" not "Syria"
+* "Palestinian Territory, Occupied" not "Palestine" 
+* "Russian Federation" not "Russia"
+* "United Kingdom (Great Britain)" not "United Kingdom"
+* "Congo, the democratic republic of the" not "DRC" or "Democratic Republic of the Congo"
+
+Using iso codes is likely the less confusing option.
+
+Again, I have no idea how well any given country is supported. It being in the list is not an indication of anything other than it being listed by the International Organization of Standardization. 
+
 ## Direct
 
 ### Install dependencies
