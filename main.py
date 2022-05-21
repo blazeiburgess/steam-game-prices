@@ -13,7 +13,11 @@ def main():
     argparser = ArgParser()
     args = argparser.parse()
     if args['list_steam_tags'] is True:
-        return print("\n".join(sorted(steam_tags.keys())))
+        return print("\n".join(
+            sorted(
+                [key.replace(' ','_') for key in steam_tags.keys()]
+            )
+        ))
     if args['list_steam_countries'] is True:
         lines = []
         for country in sorted(steam_countries, key=lambda x: x['code']):
