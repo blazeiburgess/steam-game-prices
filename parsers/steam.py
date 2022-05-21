@@ -30,13 +30,12 @@ class SteamParser(HTMLParser):
             except ValueError as ve:
                 self.log.warning(f"Could not find price in row: {[rec.strip() for rec in results if rec.strip()]}")
                 continue
-            if price == 'Free to Play':
-                parsed_price = 0
-            else:
-                try:
-                    parsed_price = parse_float(price)
-                except:
-                    parsed_price = None
+            try:
+                parsed_price = parse_float(price)
+            except:
+                self.log.warning(f'Failed to parse price, so setting parsed value to None: {price}')
+                parsed_price = None
+
             url = row.xpath('@href')[0].strip().split('?')[0]
             app_id = url.split('/app/')[-1].split('/')[0] if '/app/' in url else None
             bundle_id = url.split('/bundle/')[-1].split('/')[0] if '/bundle/' in url else None
