@@ -31,7 +31,7 @@ A more full list of commands are below, but basic running with default parameter
 The equivalent of the 'open world' query below would be
 
 ```sh
-./bin/run -t 'open world'
+./bin/run -t open_world # use underscores rather than spaces with docker
 ```
 
 And a more custom query could be
