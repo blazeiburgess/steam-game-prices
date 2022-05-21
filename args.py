@@ -118,7 +118,7 @@ class ArgParser(object):
         else:
             country_code_is_valid = True
         if not country_code_is_valid:
-            raise ValueError('Country code not supported: {args["country_code"]}')
+            raise ValueError(f'Country code not supported: {args["country_code"]}')
 
         return args
             
