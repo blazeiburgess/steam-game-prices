@@ -42,7 +42,7 @@ def main():
         random_sleep(args['random_sleep_min'], args['random_sleep_max'])
 
     writer = CSVWriter(results, results[0].keys(), 'steam', args['page_type'], pull_timestamp, args['operating_system'],
-            args['query'], args['tags'])
+            args['query'], args['tags'], args['country_code'])
     writer.write()
 
 if __name__ == '__main__':
