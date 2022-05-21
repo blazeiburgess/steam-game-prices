@@ -4,7 +4,7 @@ from parsers import SteamParser
 from utils import random_sleep
 from datetime import datetime
 from file_handlers import CSVWriter
-from constants import steam_tags
+from constants import steam_tags, steam_countries
 import logging
 from lxml.etree import ParserError
 
@@ -14,6 +14,12 @@ def main():
     args = argparser.parse()
     if args['list_steam_tags'] is True:
         return print("\n".join(sorted(steam_tags.keys())))
+    if args['list_steam_countries'] is True:
+        lines = []
+        for country in sorted(steam_countries, key=lambda x: x['code']):
+            lines.append("{code}   | {name}".format(**country))
+        print("ISO2 | Name\n----------------------")
+        return print("\n".join(lines))
     if args['tags']:
         args['tags'] = set(args['tags'])
 
