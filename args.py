@@ -86,17 +86,40 @@ class ArgParser(object):
         
 
     def _validate_args(self, args):
+        ###########################
+        ## Validating sleep time ##
+        ###########################################
         if not args['skip_random_sleep'] and args['random_sleep_min'] > args['random_sleep_max']:
             raise ValueError('Minimum random sleep value ({random_sleep_min}) cannot be higher than maximum ({random_sleep_max})'.format(**args))
+
+        #######################
+        ## Validating tags ####
+        ####################################################
         if args['tags']:
             for tag in args['tags']:
                 if not tag in steam_tags.keys():
                     matcher = Matcher(tag, steam_tags.keys())
                     match_,ratio = matcher.match()
                     raise ValueError(f"Tag not found: '{tag}'. Did you mean '{match_}'?")
-        if args['country_code'] and not (args['country_code'] in (cc['code'] for cc in steam_countries) or \
-                args['country_code'] in (cc['name'] for cc in steam_countries)):
+
+        #########################################
+        ## Country code validation and mapping ##
+        ##############################################################
+        if args['country_code']:
+            country_code_is_valid = False
+            if len(args['country_code']) > 2:
+                for country in steam_countries:
+                    if args['country_code'] == country['name']:
+                        args['country_code'] = country['code']
+                        country_code_is_valid = True
+                        break
+            elif not (args['country_code'] in (cc['code'] for cc in steam_countries)):
+                pass
+        else:
+            country_code_is_valid = True
+        if not country_code_is_valid:
             raise ValueError('Country code not supported: {args["country_code"]}')
+
         return args
             
     def parse(self):
