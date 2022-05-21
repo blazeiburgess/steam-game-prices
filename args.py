@@ -1,6 +1,6 @@
 import argparse
 from enums import SteamPageType, SteamOperatingSystem
-from constants import steam_tags
+from constants import steam_tags, steam_countries
 from matcher import Matcher
 import logging
 
@@ -73,6 +73,16 @@ class ArgParser(object):
                 dest='list_steam_tags',
                 help='This will list all available steam tags and exit'
             )
+        self._parser.add_argument(
+                '--list-steam-countries', action='store_true', default=False,
+                dest='list_steam_countries',
+                help='This will list all available steam countries and exit'
+            )
+
+        self._parser.add_argument(
+                '--country-code', '--cc', type=lambda x: x.lower().replace('_',' '), default='',
+                dest='country_code', help='Optional filter on operating system. Leaving out will pull games on all operating systems',
+            )
         
 
     def _validate_args(self, args):
@@ -84,6 +94,9 @@ class ArgParser(object):
                     matcher = Matcher(tag, steam_tags.keys())
                     match_,ratio = matcher.match()
                     raise ValueError(f"Tag not found: '{tag}'. Did you mean '{match_}'?")
+        if args['country_code'] and not (args['country_code'] in (cc['code'] for cc in steam_countries) or \
+                args['country_code'] in (cc['name'] for cc in steam_countries)):
+            raise ValueError('Country code not supported: {args["country_code"]}')
         return args
             
     def parse(self):
