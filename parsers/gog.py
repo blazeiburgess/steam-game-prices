@@ -14,11 +14,6 @@ class GogParser(object):
 
     def parse(self):
         records = []
-        try:
-            with open('output/gog_tags.json','r') as f:
-                tags = load(f)
-        except:
-            tags = []
         for product in self.resp['products']:
             url_slug = product['slug'].replace('-','_')
 
@@ -29,9 +24,6 @@ class GogParser(object):
             except:
                 self.log.warning(f"Couldn't calculate rating out of 100 for {product['title']}: {product['reviewsRating']}")
                 rating_out_of_100 = None
-            for tag in product['tags']:
-                if not tag in tags:
-                    tags.append(tag)
 
             if isinstance(product['price'],dict):
                 price_obj = product['price']
@@ -59,6 +51,4 @@ class GogParser(object):
                 'url': f'https://www.gog.com/game/{url_slug}',
             }
             records.append(record)
-        with open('output/gog_tags.json','w') as f:
-            dump(tags, f, indent=2)
         return records
