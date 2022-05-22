@@ -1,2 +1,2 @@
 from .steam import SteamPageType, SteamOperatingSystem
-from .common import Store, CurrencyDisplay
+from .common import StoreEnum, CurrencyDisplay
