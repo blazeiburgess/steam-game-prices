@@ -4,6 +4,7 @@ Forked from https://github.com/OLoKo64/steam-game-prices
 
 Refactored, removed dependency on selenium, and added a couple features. Some features exist in the original that have not yet been added here.
 
+UPDATE 21 May: Add GOG as another store that can be pulled from. This is experimental and doesn't currently allow for different page types (the argument is just ignored). It does support query, tag, offset, and operating system parameters. Differences are: offset is page, not item; tags are different, but can be accessed with the `-s gog --list-tags` arguments.
 
 # Run
 
@@ -25,6 +26,9 @@ A more full list of commands are below, but basic running with default parameter
 
 ```sh
 ./bin/run # on first run this should build, but any changes will have to be rebuilt
+
+#running for GOG
+./bin/run -s gog
 ```
 
 
@@ -118,7 +122,13 @@ You have control over the following parameters:
 To see available tags you can run:
 
 ```sh
-python3 main.py --list-steam-tags
+#steam tags
+python3 main.py --list-tags
+#or you can specify steam explicitly
+python3 main.py -s steam --list-tags
+
+#gog tags
+python3 main.py -s gog --list-tags
 ```
 
 For multiword tags you can use any of the following syntax:
@@ -131,6 +141,6 @@ python3 main.py -t open_world # underscores are equivalent to spaces
 
 # TODO
 
-Currently there is no control over what country you are pulling from or the sorting of the final csv. In addition you don't have the ability to open the file from the cli directly. Otherwise functionality should be equivalent.
+You don't have the ability to open the file from the cli directly. Otherwise functionality should be equivalent with the original repo.
 
 The current sort is on original\_price, discount DESC. So the most expensive gams with the largest discounts will appear at the top. It would be simple to add sorting by columns alone, but some special use cases (e.g. biggest discount by total currency amount, not percentage) would be nice to integrate at the beginning.

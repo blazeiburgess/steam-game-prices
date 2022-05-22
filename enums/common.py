@@ -5,5 +5,6 @@ class CurrencyDisplay(BaseEnum):
     USD = '$'
     BRL = 'R$'
 
-class Store(BaseEnum):
+class StoreEnum(BaseEnum):
     STEAM = 'steam'
+    GOG = 'gog'

@@ -1,6 +1,6 @@
 import argparse
-from enums import SteamPageType, SteamOperatingSystem
-from constants import steam_tags, steam_countries
+from enums import SteamPageType, SteamOperatingSystem, StoreEnum
+from constants import steam_tags, steam_countries, gog_tags
 from matcher import Matcher
 import logging
 
@@ -15,10 +15,11 @@ class ArgParser(object):
         self.log = logging.getLogger('argparser')
 
     def set_args(self):
-        # self._parser.add_argument(
-        #         '--store', type=str.lower, dest='store',
-        #         default='steam', help="Unused. This specifies the store, but we currently only supports Steam"
-        #     )
+        self._parser.add_argument(
+                '--store', '-s', type=str.lower, dest='game_store',
+                choices=StoreEnum.choice_values(),
+                default='steam', help="Anything other than Steam is only partially supported, especially for features like tags"
+            )
         self._parser.add_argument(
                 '--page-type', type=str.lower,
                 dest='page_type', help=PAGE_TYPE_HELP_TEXT,
@@ -31,8 +32,8 @@ class ArgParser(object):
             )
         self._parser.add_argument(
                 '--max-offset', type=int,
-                dest='max_offset', help="Max offset on results. Offset is by items, not page. Default: 250",
-                default=250
+                dest='max_offset', help="Max offset on results. Offset is by items, not page. Default: 250 for steam, 5 pages for GOG",
+                default=-1
             )
         self._parser.add_argument(
                 '--query', '-q', type=str, default='',
@@ -69,8 +70,8 @@ class ArgParser(object):
                 help="Maximum amount of time in seconds spent sleeping between requests. Ignored if '--skip-random-sleep' flag is set. Deafult: 4"
             )
         self._parser.add_argument(
-                '--list-steam-tags', action='store_true', default=False,
-                dest='list_steam_tags',
+                '--list-steam-tags','--list-tags', action='store_true', default=False,
+                dest='list_tags',
                 help='This will list all available steam tags and exit'
             )
         self._parser.add_argument(
@@ -95,12 +96,21 @@ class ArgParser(object):
         #######################
         ## Validating tags ####
         ####################################################
+        store = args['game_store']
         if args['tags']:
-            for tag in args['tags']:
-                if not tag in steam_tags.keys():
-                    matcher = Matcher(tag, steam_tags.keys())
-                    match_,ratio = matcher.match()
-                    raise ValueError(f"Tag not found: '{tag}'. Did you mean '{match_}'?")
+            if store == StoreEnum.STEAM.value:
+                for tag in args['tags']:
+                    if not tag in steam_tags.keys():
+                        matcher = Matcher(tag, steam_tags.keys())
+                        match_,ratio = matcher.match()
+                        raise ValueError(f"Tag not found: '{tag}'. Did you mean '{match_}'?")
+            elif store == StoreEnum.GOG.value:
+                for tag in args['tags']:
+                    gog_tag_slugs = [tag['slug'] for tag in gog_tags] 
+                    if not tag in gog_tag_slugs:
+                        matcher = Matcher(tag, gog_tag_slugs)
+                        match_,ratio = matcher.match()
+                        raise ValueError(f"Tag not found: '{tag}'. Did you mean '{match_}'?")
 
         #########################################
         ## Country code validation and mapping ##
